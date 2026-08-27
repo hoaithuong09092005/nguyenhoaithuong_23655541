@@ -1,3 +1,5 @@
+Họ tên: NGUYEN HOAI THUONG | MSSV: 23655541 | URL clone HTTPS:https://github.com/hoaithuong09092005/nguyenhoaithuong_23655541.git | Mã stamp: 596255
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
