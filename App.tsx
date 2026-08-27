@@ -1,4 +1,4 @@
-// TH1 | 23655541 | NGUYEN HOAI THUONG | #596255
+// TH1 | 23655541 | NGUYEN HOAI THUONG | #23655541
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -12,8 +12,16 @@ import {
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { STUDENT, examStamp, VARIANT, FLASH_SECONDS, BANNER_IMAGE_ID } from './src/constants/student';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import {
+  STUDENT,
+  VARIANT,
+  FLASH_SECONDS,
+  BANNER_IMAGE_ID,
+} from './src/constants/student';
 import { fetchProducts, Product } from './src/services/productApi';
 import { useCountdown } from './src/hooks/useCountdown';
 import { OrderModal } from './src/components/OrderModal';
@@ -41,7 +49,7 @@ interface AppContentProps {
 
 function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
   const safeAreaInsets = useSafeAreaInsets();
-  
+
   // States for products fetch
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +57,9 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
 
   // States for search and filter
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'Tất cả' | 'Đồ ăn' | 'Nước' | 'Học tập'>('Tất cả');
+  const [selectedCategory, setSelectedCategory] = useState<
+    'Tất cả' | 'Đồ ăn' | 'Nước' | 'Học tập'
+  >('Tất cả');
 
   // Modal State
   const [modalVisible, setModalVisible] = useState(false);
@@ -89,15 +99,22 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
   };
 
   // Watermark text details
-  const stamp = examStamp();
+  const stamp = STUDENT.mssv;
   const watermarkText = `TH1 · ${STUDENT.mssv} · ${STUDENT.hoTen} · #${stamp}`;
 
   // Chips configuration
-  const baseChips: ('Học tập' | 'Nước' | 'Đồ ăn' | 'Tất cả')[] = ['Tất cả', 'Đồ ăn', 'Nước', 'Học tập'];
-  const chipsList = VARIANT.chipsReversed ? [...baseChips].reverse() : baseChips;
+  const baseChips: ('Học tập' | 'Nước' | 'Đồ ăn' | 'Tất cả')[] = [
+    'Tất cả',
+    'Đồ ăn',
+    'Nước',
+    'Học tập',
+  ];
+  const chipsList = VARIANT.chipsReversed
+    ? [...baseChips].reverse()
+    : baseChips;
 
   // Filter products based on category and search query
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products.filter(product => {
     const matchesCategory =
       selectedCategory === 'Tất cả' || product.category === selectedCategory;
     const matchesSearch = product.title
@@ -114,9 +131,13 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
   // 1. Loading State Screen
   if (loading) {
     return (
-      <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
+      <View
+        style={[styles.centerContainer, { backgroundColor: colors.background }]}
+      >
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={[styles.loadingText, { color: colors.text }]}>Đang tải món...</Text>
+        <Text style={[styles.loadingText, { color: colors.text }]}>
+          Đang tải món...
+        </Text>
       </View>
     );
   }
@@ -124,8 +145,15 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
   // 2. Error State Screen
   if (error) {
     return (
-      <View style={[styles.centerContainer, { backgroundColor: colors.background, paddingHorizontal: 30 }]}>
-        <Text style={[styles.errorMssv, { color: colors.error }]}>{STUDENT.mssv}</Text>
+      <View
+        style={[
+          styles.centerContainer,
+          { backgroundColor: colors.background, paddingHorizontal: 30 },
+        ]}
+      >
+        <Text style={[styles.errorMssv, { color: colors.error }]}>
+          {STUDENT.mssv}
+        </Text>
         <Text style={[styles.errorText, { color: colors.text }]}>{error}</Text>
         <Pressable
           style={({ pressed }) => [
@@ -172,7 +200,7 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
           <Pressable
             style={({ pressed }) => [
               styles.themeToggleBtn,
-              { opacity: pressed ? 0.7 : 1 }
+              { opacity: pressed ? 0.7 : 1 },
             ]}
             onPress={() => setIsDarkMode(!isDarkMode)}
           >
@@ -187,8 +215,15 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
       {/* Main Content Area */}
       <View style={styles.content}>
         {/* Search Input (ShopInput) */}
-        <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <Text style={[styles.searchIcon, { color: colors.textLight }]}>🔍</Text>
+        <View
+          style={[
+            styles.searchContainer,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
+          <Text style={[styles.searchIcon, { color: colors.textLight }]}>
+            🔍
+          </Text>
           <TextInput
             style={[styles.searchInput, { color: colors.text }]}
             placeholder={`Tìm món, nước, đồ dùng — ${STUDENT.mssv}`}
@@ -201,13 +236,17 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
         {/* Banner Section */}
         <View style={styles.bannerContainer}>
           <Image
-            source={{ uri: `https://picsum.photos/id/${BANNER_IMAGE_ID}/800/320` }}
+            source={{
+              uri: `https://picsum.photos/id/${BANNER_IMAGE_ID}/800/320`,
+            }}
             style={styles.bannerImage}
             resizeMode="cover"
           />
           <View style={styles.bannerOverlay}>
             <Text style={styles.bannerTitle}>Đặt nhanh · Nhận tại quầy</Text>
-            <Text style={styles.bannerSubtitle}>Cửa hàng tiện lợi ktx 24/7</Text>
+            <Text style={styles.bannerSubtitle}>
+              Cửa hàng tiện lợi ktx 24/7
+            </Text>
           </View>
         </View>
 
@@ -217,7 +256,7 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={chipsList}
-            keyExtractor={(item) => item}
+            keyExtractor={item => item}
             contentContainerStyle={styles.chipsContent}
             renderItem={({ item }) => {
               const isSelected = selectedCategory === item;
@@ -226,7 +265,9 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
                   style={[
                     styles.chip,
                     {
-                      backgroundColor: isSelected ? colors.primary : colors.surface,
+                      backgroundColor: isSelected
+                        ? colors.primary
+                        : colors.surface,
                       borderColor: isSelected ? colors.primary : colors.border,
                     },
                   ]}
@@ -252,7 +293,7 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
         {/* Product Items FlatList */}
         <FlatList
           data={filteredProducts}
-          keyExtractor={(item) => `${STUDENT.mssv}-${item.id}`}
+          keyExtractor={item => `${STUDENT.mssv}-${item.id}`}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
@@ -285,13 +326,18 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
 
               {/* Product Info */}
               <View style={styles.productInfo}>
-                <Text style={[styles.productTitle, { color: colors.text }]} numberOfLines={2}>
+                <Text
+                  style={[styles.productTitle, { color: colors.text }]}
+                  numberOfLines={2}
+                >
                   {item.title}
                 </Text>
                 <Text style={[styles.productPrice, { color: colors.primary }]}>
                   {item.displayPrice}
                 </Text>
-                <Text style={[styles.productCategory, { color: colors.textLight }]}>
+                <Text
+                  style={[styles.productCategory, { color: colors.textLight }]}
+                >
                   {item.category}
                 </Text>
               </View>
@@ -300,7 +346,10 @@ function AppContent({ isDarkMode, setIsDarkMode }: AppContentProps) {
               <Pressable
                 style={({ pressed }) => [
                   styles.orderBtn,
-                  { backgroundColor: colors.primary, opacity: pressed ? 0.8 : 1 },
+                  {
+                    backgroundColor: colors.primary,
+                    opacity: pressed ? 0.8 : 1,
+                  },
                 ]}
                 onPress={() => handleOpenOrder(item)}
               >
